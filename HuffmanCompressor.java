@@ -90,6 +90,26 @@ public class HuffmanCompressor {
             System.out.print(bits.substring(i, end) + " ");
         }
         System.out.println();
+
+        // Imprimir y guardar los grupos de 8 bits convertidos a decimales
+        System.out.println("\nBits convertidos a decimales:");
+            try (BufferedWriter decimalWriter = new BufferedWriter(new FileWriter("compressed_decimals.txt"))) {
+                //recorremos los bits de 8 en 8 
+                 for (int i = 0; i < bits.length(); i += 8) {
+                    //calculamos el final del bloque de 8 bits, 
+                    // por ejemplo, si quedan solo 3 bits al final, leer hasta el length() en lugar de pasar el límite
+                     int end = Math.min(i + 8, bits.length());
+                     //extraemos el bloque de bits desde i hasta end
+                     // y lo convertimos a decimal usando Integer.parseInt con base 2 (binario)
+                     String byteString = bits.substring(i, end);
+                     int decimal = Integer.parseInt(byteString, 2);
+                    //imprimimos el decimal en consola y lo guardamos en el archivo "compressed_decimals.txt"
+                     System.out.print(decimal + " ");
+                     decimalWriter.write(decimal + " ");
+                    }
+                System.out.println();
+                }
+        
     }
 
     /**
